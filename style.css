@@ -106,10 +106,13 @@ button {
 .counter-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
   gap: 10px;
+  align-items: stretch;
 }
 
 .counter-card {
+  width: 100%;
   border-radius: 16px;
   padding: 12px;
   display: grid;
