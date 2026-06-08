@@ -1,0 +1,10 @@
+{
+  "name": "\u30B7\u30F3\u30D7\u30EB\u30B9\u30ED\u30C3\u30C8\u30AB\u30A6\u30F3\u30BF\u30FC",
+  "short_name": "\u30B9\u30ED\u30AB\u30A6\u30F3\u30BF\u30FC",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#06080b",
+  "theme_color": "#0d0f12",
+  "lang": "ja"
+}
