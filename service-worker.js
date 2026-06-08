@@ -1,4 +1,4 @@
-const CACHE_NAME = "simple-slot-counter-v1";
+const CACHE_NAME = "simple-slot-counter-v2";
 const ASSETS = [
   "./",
   "./index.html",

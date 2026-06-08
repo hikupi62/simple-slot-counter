@@ -1,5 +1,6 @@
 const STORAGE_KEY = "simple-slot-counter-v1";
 const CURRENT_VERSION = 1;
+const COUNTER_KEYS = ["a", "b", "c", "d", "e", "f"];
 
 const defaultState = () => ({
   version: CURRENT_VERSION,
@@ -10,6 +11,7 @@ const defaultState = () => ({
     c: 0,
     d: 0,
     e: 0,
+    f: 0,
   },
   minusMode: false,
   updatedAt: new Date().toISOString(),
@@ -33,6 +35,7 @@ function normalizeState(raw) {
       c: clampCount(counters.c),
       d: clampCount(counters.d),
       e: clampCount(counters.e),
+      f: clampCount(counters.f),
     },
     minusMode: Boolean(source.minusMode),
     updatedAt: typeof source.updatedAt === "string" ? source.updatedAt : base.updatedAt,
@@ -48,7 +51,11 @@ function loadState() {
   }
 
   try {
-    return normalizeState(JSON.parse(existing));
+    const normalized = normalizeState(JSON.parse(existing));
+    if (JSON.stringify(normalized) !== existing) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    }
+    return normalized;
   } catch {
     const fallback = defaultState();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(fallback));
@@ -58,10 +65,7 @@ function loadState() {
 
 let state = loadState();
 
-const gameDisplay = document.getElementById("gameDisplay");
 const minusToggle = document.getElementById("minusToggle");
-const modeBanner = document.getElementById("modeBanner");
-const gameButton = document.getElementById("gameButton");
 const resetButton = document.getElementById("resetButton");
 const counterButtons = Array.from(document.querySelectorAll(".counter-button"));
 
@@ -70,24 +74,13 @@ function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
-function formatProbability(game, hitCount) {
-  if (game <= 0 || hitCount <= 0) {
-    return "1/--";
-  }
-
-  return `1/${(game / hitCount).toFixed(2)}`;
-}
-
 function render() {
-  gameDisplay.textContent = String(state.game);
   minusToggle.classList.toggle("active", state.minusMode);
   minusToggle.setAttribute("aria-pressed", String(state.minusMode));
-  modeBanner.hidden = !state.minusMode;
   document.body.classList.toggle("minus-mode", state.minusMode);
 
-  ["a", "b", "c", "d", "e"].forEach((key) => {
+  COUNTER_KEYS.forEach((key) => {
     document.getElementById(`count-${key}`).textContent = String(state.counters[key]);
-    document.getElementById(`prob-${key}`).textContent = formatProbability(state.game, state.counters[key]);
   });
 }
 
@@ -96,12 +89,6 @@ function applyDelta(currentValue) {
     return Math.max(0, currentValue - 1);
   }
   return currentValue + 1;
-}
-
-function updateGame() {
-  state.game = applyDelta(state.game);
-  saveState();
-  render();
 }
 
 function updateCounter(key) {
@@ -124,13 +111,15 @@ function resetAll() {
   state = {
     ...state,
     game: 0,
-    counters: { a: 0, b: 0, c: 0, d: 0, e: 0 },
+    counters: COUNTER_KEYS.reduce((next, key) => {
+      next[key] = 0;
+      return next;
+    }, {}),
   };
   saveState();
   render();
 }
 
-gameButton.addEventListener("click", updateGame);
 minusToggle.addEventListener("click", toggleMinusMode);
 resetButton.addEventListener("click", resetAll);
 counterButtons.forEach((button) => {

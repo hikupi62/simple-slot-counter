@@ -16,6 +16,7 @@
   --c: #d2a72d;
   --d: #2f77d7;
   --e: #d8dee6;
+  --f: #b163e0;
 }
 
 * {
@@ -47,15 +48,14 @@ button {
 
 .app-shell {
   min-height: 100vh;
-  padding: 14px 14px 18px;
+  padding: 12px 12px 16px;
   display: grid;
-  gap: 12px;
+  gap: 10px;
   max-width: 560px;
   margin: 0 auto;
 }
 
 .topbar,
-.game-panel,
 .counter-card,
 .footer-actions {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)), var(--panel);
@@ -64,8 +64,8 @@ button {
 }
 
 .topbar {
-  border-radius: 18px;
-  padding: 14px;
+  border-radius: 16px;
+  padding: 12px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,88 +81,40 @@ button {
 
 .topbar h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .minus-toggle {
-  width: 64px;
-  height: 64px;
-  border-radius: 18px;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
   background: linear-gradient(180deg, #262d36, #14191f);
   border: 1px solid #3b4654;
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .minus-toggle.active {
   background: linear-gradient(180deg, #8d262a, #5e1418);
   border-color: var(--danger-line);
-  box-shadow: 0 0 0 2px rgba(255, 101, 101, 0.18);
-}
-
-.mode-banner {
-  border-radius: 14px;
-  padding: 10px 14px;
-  background: rgba(143, 31, 37, 0.16);
-  border: 1px solid var(--danger-line);
-  color: #ffd5d5;
-  text-align: center;
-  font-weight: 700;
-}
-
-.game-panel {
-  border-radius: 22px;
-  padding: 16px;
-}
-
-.panel-label {
-  margin: 0 0 10px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.lcd-display {
-  min-height: 96px;
-  border-radius: 18px;
-  background: var(--lcd-bg);
-  color: var(--lcd-text);
-  display: grid;
-  place-items: center;
-  font-size: clamp(48px, 12vw, 72px);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums;
-  border: 2px solid rgba(18, 40, 11, 0.18);
-  box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.18);
-}
-
-.game-button {
-  width: 100%;
-  margin-top: 14px;
-  min-height: 74px;
-  border-radius: 22px;
-  background: linear-gradient(180deg, #fafafa, #bfc7d3);
-  color: #11161d;
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  box-shadow:
+    0 0 0 2px rgba(255, 101, 101, 0.18),
+    0 0 18px rgba(255, 101, 101, 0.24);
 }
 
 .counter-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.counter-card {
-  border-radius: 20px;
-  padding: 14px;
-  display: grid;
   gap: 10px;
 }
 
-.counter-card.counter-e {
-  grid-column: 1 / -1;
+.counter-card {
+  border-radius: 16px;
+  padding: 12px;
+  display: grid;
+  gap: 8px;
+  min-height: 0;
 }
 
 .counter-head {
@@ -174,28 +126,21 @@ button {
 
 .counter-head h2 {
   margin: 0;
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .counter-value {
-  font-size: 34px;
+  font-size: clamp(28px, 7vw, 36px);
   font-weight: 900;
-  font-variant-numeric: tabular-nums;
-}
-
-.counter-prob {
-  color: var(--muted);
-  font-size: 18px;
-  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
 .counter-button {
   width: 100%;
-  min-height: 68px;
-  border-radius: 20px;
+  min-height: 54px;
+  border-radius: 16px;
   color: #fff;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 800;
 }
 
@@ -204,10 +149,11 @@ button {
 .counter-c .counter-button { background: linear-gradient(180deg, #f0c84b, #aa7b0d); color: #1a1605; }
 .counter-d .counter-button { background: linear-gradient(180deg, #4f96f7, #2455a3); }
 .counter-e .counter-button { background: linear-gradient(180deg, #f5f7fa, #b9c2cd); color: #12161b; }
+.counter-f .counter-button { background: linear-gradient(180deg, #d88bff, #8436b0); }
 
 .footer-actions {
   border-radius: 16px;
-  padding: 12px;
+  padding: 10px 12px;
   display: flex;
   justify-content: flex-end;
 }
@@ -223,7 +169,6 @@ button {
 }
 
 body.minus-mode .topbar,
-body.minus-mode .game-panel,
 body.minus-mode .counter-card,
 body.minus-mode .footer-actions {
   border-color: rgba(255, 101, 101, 0.48);
@@ -237,35 +182,31 @@ body.minus-mode {
 
 @media (max-width: 420px) {
   .app-shell {
-    padding: 12px 12px 18px;
+    padding: 10px 10px 14px;
   }
 
   .topbar h1 {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .counter-grid {
-    gap: 10px;
+    gap: 8px;
   }
 
   .counter-card {
-    padding: 12px;
+    padding: 10px;
   }
 
   .counter-head h2 {
-    font-size: 17px;
-  }
-
-  .counter-value {
-    font-size: 30px;
-  }
-
-  .counter-prob {
     font-size: 16px;
   }
 
+  .counter-value {
+    font-size: 28px;
+  }
+
   .counter-button {
-    min-height: 62px;
-    font-size: 20px;
+    min-height: 50px;
+    font-size: 18px;
   }
 }
